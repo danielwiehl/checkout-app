@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PlatformInitializer } from './platform-initializer.service';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,19 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: providePlatformInitializerFn,
+      deps: [PlatformInitializer],
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+}
+
+export function providePlatformInitializerFn(initializer: PlatformInitializer): () => Promise<void> {
+  return (): Promise<void> => initializer.init();
+}
