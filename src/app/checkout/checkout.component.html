@@ -1,0 +1,16 @@
+<h1>Checkout</h1>
+
+<form>
+  <input placeholder="Firstname">
+  <input placeholder="Lastname">
+  <input placeholder="Street">
+  <input placeholder="Place">
+  <input placeholder="Credit Card">
+  <button class="buy" (click)="onBuyClick()">Buy</button>
+
+  <ul class="products">
+    <li *ngFor="let productId of productIds">
+      <sci-router-outlet [name]="'product-checkout-' + productId"></sci-router-outlet>
+    </li>
+  </ul>
+</form>
